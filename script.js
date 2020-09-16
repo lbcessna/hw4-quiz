@@ -1,29 +1,38 @@
-var timeEl = document.querySelector(".time");
+var leaderBoard = [];
+var score = 0;
+var welcomeEL = document.querySelector(".welcome");
+var startEL = document.getElementById("start");
+var timeEl = document.querySelector(".countdown");
 var mainEl = document.getElementById("main");
 
-var secondsLeft = 10;
 
-function setTime() {
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
+welcomeEL.textContent = "Press this button to start the quiz!";
 
-    if(secondsLeft === 0) {
-      clearInterval(timerInterval);
-      sendMessage();
-    }
+startEL.addEventListener("click", countingDown);
 
-  }, 1000);
+
+function countingDown() {
+    var timeLeft = 5;
+    var timerInterval = setInterval(function () {
+        welcomeEL.textContent = "Too late to turn back now...";
+        startEL.style.display = "none";
+
+        timeLeft--;
+        timeEl.textContent = timeLeft + " seconds until the quiz begins.";
+
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            quiz();
+        }
+
+    }, 1000);
 }
 
-function sendMessage() {
-  timeEl.textContent = " ";
+function quiz() {
+    welcomeEL.textContent = "The quiz has begun!"
+    timeEl.textContent = " ";
 
-  var imgEl = document.createElement("img");
-
-  imgEl.setAttribute("src", "images/image_1.jpg");
-  mainEl.appendChild(imgEl);
 
 }
 
-setTime();
+// startQuiz();
