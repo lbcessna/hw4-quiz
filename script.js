@@ -51,7 +51,15 @@ function askNextQuestion() {
     }
     choicesEl.addEventListener("click", function (event) {
         event.preventDefault();
-        console.log("Do you see me?");
+        if(event.target.textContent===questions[currentQuestion].correct){
+            console.log(currentQuestion);
+            currentQuestion++;
+            console.log("YES!");
+            console.log(currentQuestion);
+            // askNextQuestion();?S
+        }else {
+            console.log("Booooo! Wrong answer!");
+        }
     })
 };
 
@@ -59,7 +67,7 @@ function askNextQuestion() {
 //ask 1st question
 //list choices of 1st question
 //stop until a choice is made
-//add eventlistener to wait for a choice
+//add event listener to wait for a choice
 //once a choice is made, increment currentQuestion++
 //ask 2nd question
 //so on...
