@@ -5,8 +5,10 @@ var startEL = document.getElementById("start");
 var timeEl = document.querySelector(".countdown");
 var questionsEl = document.getElementById("questions");
 var choicesEl = document.getElementById("choices");
+var finalEl = document.querySelector(".final");
 
 var currentQuestion = 0;
+var wrongAnswers = 0;
 
 welcomeEL.textContent = "Press this button to start the quiz!";
 
@@ -31,9 +33,11 @@ function quiz() {
     var quizTimeLeft = 90;
     welcomeEL.textContent = "The quiz has begun!"
     askNextQuestion();
+    
     var quizInterval = setInterval(function () {
         timeEl.textContent = quizTimeLeft + " seconds remaining";
         quizTimeLeft--;
+        score = quizTimeLeft;
     }, 1000)
 }
 
@@ -64,26 +68,23 @@ choicesEl.addEventListener("click", function (event) {
         console.log("YES!");
         askNextQuestion();
     } else {
-
         console.log("Booooo! Wrong answer!");
+        wrongAnswers++;
+        askNextQuestion();
     }
 })
 
 function endQuiz() {
-
+    var userName = prompt("What is your name?");
+    var deductions = wrongAnswers*10;
+    var finalScore = (score - deductions);
+    questionsEl.textContent = "";
+    timeEl.style.display = "none";
+    choicesEl.style.display = "none";
+    welcomeEL.textContent = "The quiz is complete!";
+    finalEl.textContent = userName + ", you missed " + wrongAnswers + ". Your final score was " + finalScore;
     console.log("the quiz is done");
 }
-
-
-//ask 1st question
-//list choices of 1st question
-//stop until a choice is made
-//add event listener to wait for a choice
-//once a choice is made, increment currentQuestion++
-//ask 2nd question
-//so on...
-//quiz stops after currentQuestion.length is reached.
-
 
 var questions = [{
     question: "Which company created JavaScript?",
