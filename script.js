@@ -38,30 +38,40 @@ function quiz() {
 }
 
 function askNextQuestion() {
-    questionsEl.textContent = questions[currentQuestion].question
-    let choices = questions[currentQuestion].choices;
-    //list all choices as li under current question
-    for (let j = 0; j < choices.length; j++) {
-        const element = choices[j];
-        var node = document.createElement("li");
-        node.classList.add("choice");
-        var textnode = document.createTextNode(element);
-        node.appendChild(textnode);
-        choicesEl.appendChild(node);
-    }
-    choicesEl.addEventListener("click", function (event) {
-        event.preventDefault();
-        if(event.target.textContent===questions[currentQuestion].correct){
-            console.log(currentQuestion);
-            currentQuestion++;
-            console.log("YES!");
-            console.log(currentQuestion);
-            // askNextQuestion();?S
-        }else {
-            console.log("Booooo! Wrong answer!");
+    if (currentQuestion.value===6) {
+        endQuiz();
+    } else {
+        questionsEl.textContent = questions[currentQuestion].question;
+        choicesEl.textContent = "";
+        let choices = questions[currentQuestion].choices;
+        //list all choices as li under current question
+        for (let j = 0; j < choices.length; j++) {
+            const element = choices[j];
+            var node = document.createElement("li");
+            node.classList.add("choice");
+            var textnode = document.createTextNode(element);
+            node.appendChild(textnode);
+            choicesEl.appendChild(node);
         }
-    })
+    }
 };
+
+choicesEl.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (event.target.textContent === questions[currentQuestion].correct) {
+        currentQuestion++;
+        console.log("YES!");
+        askNextQuestion();
+    } else {
+
+        console.log("Booooo! Wrong answer!");
+    }
+})
+
+function endQuiz() {
+
+    console.log("the quiz is done");
+}
 
 
 //ask 1st question
@@ -76,49 +86,27 @@ function askNextQuestion() {
 
 var questions = [{
     question: "Which company created JavaScript?",
-    choices: ["Mircosoft", "Sun Microsystems", "Oracle", "Netscape"],
+    choices: ["Microsoft", "Sun Microsystems", "Oracle", "Netscape"],
     correct: "Oracle",
 },
 {
     question: "Who invented JavaScript?",
-    choices: [
-        {
-            text: "Douglas Crockford", correct: "false"
-        },
-        {
-            text: "Sheryl Sandberg", correct: "false"
-        },
-        {
-            text: "Brendan Eich", correct: "true"
-        },
-        {
-            text: "David Boucher", correct: "false"
-        }],
-
+    choices: ["Douglas Crockford", "Sheryl Sandberg", "Brendan Eich", "David Boucher"],
+    correct: "Brendan Eich",
 },
 {
     question: "How long did Brendan Eich take to write the JavaScript language?",
-    choices: [
-        {
-            text: "10 days", correct: "true"
-        },
-        {
-            text: "2 weeks", correct: "false"
-        },
-        {
-            text: "2 months", correct: "false"
-        },
-        {
-            text: "10 months", correct: "false"
-        }],
+    choices: ["10 days", "2 weeks", "2 months", "10 months"],
+    correct: "10 days",
 },
 {
     question: "JavaScript wasn't always called that. What other name has it been released under?",
-    choices: [{ text: "Latte", correct: "false" }, { text: "Mocha", correct: "true" }, { text: "BScript", correct: "false" }, { text: "Spidermonkey", correct: false }],
-
+    choices: ["Latte", "Mocha", "BScript", "Spidermonkey"],
+    correct: "Mocha",
 },
 {
     question: "Which tool can you use to ensure code quality?",
-    choices: [{ text: "Angular", correct: "false" }, { text: "jQuery", correct: "" }, { text: "RequireJS", correct: "false" }, { text: "ESLint", correct: "true" }],
+    choices: ["Angular", "jQuery", "RequireJS", "ESLint"],
+    correct: "ESLint"
 }
 ];
