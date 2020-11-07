@@ -38,7 +38,8 @@ function quiz() {
 }
 
 function askNextQuestion() {
-    if (currentQuestion.value===6) {
+    console.log(currentQuestion);
+    if (currentQuestion>=5) {
         endQuiz();
     } else {
         questionsEl.textContent = questions[currentQuestion].question;
@@ -107,6 +108,6 @@ var questions = [{
 {
     question: "Which tool can you use to ensure code quality?",
     choices: ["Angular", "jQuery", "RequireJS", "ESLint"],
-    correct: "ESLint"
+    correct: "ESLint",
 }
 ];
