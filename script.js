@@ -1,20 +1,23 @@
-var leaderBoard = [];
-var score = 0;
 var welcomeEL = document.querySelector(".welcome");
 var startEL = document.getElementById("start");
 var timeEl = document.querySelector(".countdown");
 var questionsEl = document.getElementById("questions");
 var choicesEl = document.getElementById("choices");
-var finalEl = document.querySelector(".final");
+var leaderBoardEl = document.querySelector(".leaderBoard");
 
+var leaderBoard = [];
+var score = 0;
 var currentQuestion = 0;
 var wrongAnswers = 0;
 
+//Welcome user to the quiz
 welcomeEL.textContent = "Press this button to start the quiz!";
 
+//Listen for when the user is ready to begin
 startEL.addEventListener("click", countingDown);
 
 function countingDown() {
+    //Give user a countdown to be ready
     var timeLeft = 5;
     var timerInterval = setInterval(function () {
         welcomeEL.textContent = "Too late to turn back now...";
@@ -26,14 +29,15 @@ function countingDown() {
             quiz();
         }
 
-    }, 100);
+    }, 1000);
 }
 
 function quiz() {
+    //Restart and show quiz timer
     var quizTimeLeft = 90;
     welcomeEL.textContent = "The quiz has begun!"
     askNextQuestion();
-    
+    //Keep count of the time.
     var quizInterval = setInterval(function () {
         timeEl.textContent = quizTimeLeft + " seconds remaining";
         quizTimeLeft--;
@@ -42,7 +46,7 @@ function quiz() {
 }
 
 function askNextQuestion() {
-    console.log(currentQuestion);
+    //Before asking next question, ensure we're not at the end of the quiz.
     if (currentQuestion>=5) {
         endQuiz();
     } else {
@@ -65,10 +69,8 @@ choicesEl.addEventListener("click", function (event) {
     event.preventDefault();
     if (event.target.textContent === questions[currentQuestion].correct) {
         currentQuestion++;
-        console.log("YES!");
         askNextQuestion();
     } else {
-        console.log("Booooo! Wrong answer!");
         wrongAnswers++;
         askNextQuestion();
     }
@@ -82,8 +84,17 @@ function endQuiz() {
     timeEl.style.display = "none";
     choicesEl.style.display = "none";
     welcomeEL.textContent = "The quiz is complete!";
-    finalEl.textContent = userName + ", you missed " + wrongAnswers + ". Your final score was " + finalScore;
-    console.log("the quiz is done");
+    leaderBoardEl.textContent = userName + ", you missed " + wrongAnswers + ". Your final score was " + finalScore;
+    leaderBoard.push(userName, finalScore)
+
+    for (let i = 0; i < leaderBoard.length; i++) {
+        const element = leaderBoard[i];
+        var node = document.createElement("td");
+        node.classList.add("leader");
+        var textnode = document.createTextNode(element);
+        node.appendChild(textnode);
+    }
+
 }
 
 var questions = [{
